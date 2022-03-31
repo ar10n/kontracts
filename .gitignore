@@ -1,0 +1,7 @@
+venv
+.vscode
+.idea
+migrations
+__pycache__
+node_modules
+.git
