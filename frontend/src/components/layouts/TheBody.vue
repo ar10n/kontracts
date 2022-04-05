@@ -1,11 +1,11 @@
 <template>
   <div class="body-container">
     <div class="tab-panel">
-      <TabButton @click="setSelectedTab('the-contracts')">Контракты</TabButton>
-      <TabButton @click="setSelectedTab('the-claims')">Претензии</TabButton>
-      <TabButton>Клиенты</TabButton>
-      <TabButton>Товары</TabButton>
-      <TabButton>Регионы</TabButton>
+      <tab-button @click="setSelectedTab('the-contracts')">Контракты</tab-button>
+      <tab-button @click="setSelectedTab('the-claims')">Претензии</tab-button>
+      <tab-button>Клиенты</tab-button>
+      <tab-button>Товары</tab-button>
+      <tab-button>Регионы</tab-button>
     </div>
     <div class="content">
       <component :is="selectedTab"></component>

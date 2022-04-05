@@ -16,5 +16,6 @@ header {
   color: #f1faee;
   font-size: 1.5rem;
   padding-left: 10px;
+  cursor: default;
 }
 </style>
