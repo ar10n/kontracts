@@ -1,4 +1,10 @@
 <template>
+  <base-dialog v-if="contractClicked" :contractInfo="contractInfo">
+    <template #actions>
+      <base-button @click="closeDialog">Закрыть</base-button>
+    </template>
+  </base-dialog>
+
   <div class="contracts-table">
     <div class="contracts-table__headers">
       <div class="headers__item">Номер контракта</div>
@@ -10,54 +16,51 @@
       <div class="headers__item">Регион</div>
     </div>
     <div class="contracts-table__body">
-      <div class="body-line">
-        <div class="body-line__item">123</div>
-        <div class="body-line__item">0123456789</div>
-        <div class="body-line__item">02.04.2022</div>
-        <div class="body-line__item">100000.00</div>
-        <div class="body-line__item">ГКБ</div>
-        <div class="body-line__item">Лекопт</div>
-        <div class="body-line__item">Москва</div>
-      </div>
-      <div class="body-line">
-        <div class="body-line__item">123</div>
-        <div class="body-line__item">0123456789</div>
-        <div class="body-line__item">02.04.2022</div>
-        <div class="body-line__item">100000.00</div>
-        <div class="body-line__item">ГКБ</div>
-        <div class="body-line__item">Лекопт</div>
-        <div class="body-line__item">Москва</div>
-      </div>
-      <div class="body-line">
-        <div class="body-line__item">123</div>
-        <div class="body-line__item">0123456789</div>
-        <div class="body-line__item">02.04.2022</div>
-        <div class="body-line__item">100000.00</div>
-        <div class="body-line__item">ГКБ</div>
-        <div class="body-line__item">Лекопт</div>
-        <div class="body-line__item">Москва</div>
-      </div>
-      <div class="body-line">
-        <div class="body-line__item">123</div>
-        <div class="body-line__item">0123456789</div>
-        <div class="body-line__item">02.04.2022</div>
-        <div class="body-line__item">100000.00</div>
-        <div class="body-line__item">ГКБ</div>
-        <div class="body-line__item">Лекопт</div>
-        <div class="body-line__item">Москва</div>
-      </div>
-      <div class="body-line">
-        <div class="body-line__item">123</div>
-        <div class="body-line__item">0123456789</div>
-        <div class="body-line__item">02.04.2022</div>
-        <div class="body-line__item">100000.00</div>
-        <div class="body-line__item">ГКБ</div>
-        <div class="body-line__item">Лекопт</div>
-        <div class="body-line__item">Москва</div>
+      <div v-for="contract in contracts" :key="contract.id" class="body-line" @click="toggleSidePanel(contract)">
+        <div class="body-line__item">{{ contract.number }}</div>
+        <div class="body-line__item">{{ contract.notice }}</div>
+        <div class="body-line__item">{{ contract.start_date }}</div>
+        <div class="body-line__item">{{ contract.price }}</div>
+        <div class="body-line__item">{{ contract.client.name }}</div>
+        <div class="body-line__item">{{ contract.company.name }}</div>
+        <div class="body-line__item">{{ contract.region.name }}</div>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+import BaseButton from '../UI/BaseButton.vue';
+import BaseDialog from '../UI/BaseDialog.vue';
+
+export default {
+  components: { BaseButton, BaseDialog },
+
+  data() {
+    return {
+      contractInfo: null,
+      contracts: null,
+      contractClicked: false,
+    }
+  },
+
+  methods: {
+    toggleSidePanel(contract) {
+      this.contractInfo = contract;
+      this.contractClicked = !this.contractClicked;
+    },
+    closeDialog() {
+      this.contractClicked = false;
+    }
+  },
+
+  created() {
+    fetch('http://127.0.0.1:8000/api/v1/contract/list')
+      .then(response => response.json())
+      .then(data => this.contracts = data);
+  }
+}
+</script>
 
 <style scoped>
 .contracts-table {
@@ -101,11 +104,11 @@
   border-radius: 10px;
 }
 
-.body-line:hover > .body-line__item {
+.body-line:hover>.body-line__item {
   border-right: 1px solid #1d3557;
 }
 
-.body-line:hover > .body-line__item:last-child {
+.body-line:hover>.body-line__item:last-child {
   border-right: none;
 }
 
