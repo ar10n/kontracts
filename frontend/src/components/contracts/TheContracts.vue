@@ -1,9 +1,9 @@
 <template>
-  <base-dialog v-if="contractClicked" :contractInfo="contractInfo">
+  <details-modal v-if="contractClicked" :contractInfo="contractInfo">
     <template #actions>
-      <base-button @click="closeDialog">Закрыть</base-button>
+      <base-button @click="closeModal">Закрыть</base-button>
     </template>
-  </base-dialog>
+  </details-modal>
 
   <div class="contracts-table">
     <div class="contracts-table__headers">
@@ -16,7 +16,7 @@
       <div class="headers__item">Регион</div>
     </div>
     <div class="contracts-table__body">
-      <div v-for="contract in contracts" :key="contract.id" class="body-line" @click="toggleSidePanel(contract)">
+      <div v-for="contract in contracts" :key="contract.id" class="body-line" @click="toggleModal(contract)">
         <div class="body-line__item">{{ contract.number }}</div>
         <div class="body-line__item">{{ contract.notice }}</div>
         <div class="body-line__item">{{ contract.start_date }}</div>
@@ -31,10 +31,10 @@
 
 <script>
 import BaseButton from '../UI/BaseButton.vue';
-import BaseDialog from '../UI/BaseDialog.vue';
+import DetailsModal from '../UI/DetailsModal.vue';
 
 export default {
-  components: { BaseButton, BaseDialog },
+  components: { BaseButton, DetailsModal },
 
   data() {
     return {
@@ -45,11 +45,11 @@ export default {
   },
 
   methods: {
-    toggleSidePanel(contract) {
+    toggleModal(contract) {
       this.contractInfo = contract;
       this.contractClicked = !this.contractClicked;
     },
-    closeDialog() {
+    closeModal() {
       this.contractClicked = false;
     }
   },

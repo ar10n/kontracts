@@ -1,8 +1,30 @@
 <template>
   <header>
     <div class="logo">KONTRACTS</div>
+    <div class="buttons">
+      <header-button @click="toggleModal">Добавить контракт</header-button>
+      <header-button>Добавить претензию</header-button>
+    </div>
   </header>
 </template>
+
+<script>
+import HeaderButton from '../UI/HeaderButton.vue';
+
+export default {
+  data() {
+    return {
+      newContractClicked: false,
+    }
+  },
+  components: { HeaderButton },
+  methods: {
+    toggleModal() {
+      this.newContractClicked = !this.newContractClicked;
+    }
+  }
+}
+</script>
 
 <style scoped>
 header {
