@@ -15,10 +15,17 @@
       <div>Срок действия: до {{ contractInfo.end_date }}</div>
       <hr>
       <div class="price">Цена контракта: {{ contractInfo.price }} руб.</div>
+      <hr>
+      <div v-if="contractInfo.claims.length > 0">
+        <div class="claim">Претензии:</div>
+        <div v-for="claim in contractInfo.claims" :key="claim.id">{{ claim.name }} от {{ claim.start_date }}</div>
+      </div>
+      <div v-else class="no-claim">Претензий нет</div>
     </section>
     <menu>
       <slot name="actions"></slot>
-    </menu></dialog>
+    </menu>
+  </dialog>
 </template>
 
 <script>
@@ -29,9 +36,17 @@ export default {
 
 <style scoped>
 .client,
-.price {
+.price,
+.no-claim {
   font-size: 1.2rem;
   font-weight: 800;
+  color: #1D3557
+}
+
+.claim {
+  font-size: 1.2rem;
+  font-weight: 800;
+  color: #E63946;
 }
 
 .price {
