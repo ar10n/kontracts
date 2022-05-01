@@ -1,7 +1,7 @@
 <template>
   <details-modal v-if="contractClicked" :contractInfo="contractInfo">
     <template #actions>
-      <base-button @click="closeModal">Закрыть</base-button>
+      <base-button @click="closeModal" mode="base">Закрыть</base-button>
     </template>
   </details-modal>
 
@@ -39,7 +39,7 @@ export default {
   data() {
     return {
       contractInfo: null,
-      contracts: null,
+      contracts: [],
       contractClicked: false,
     }
   },

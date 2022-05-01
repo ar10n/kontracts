@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <the-header class="the-header"></the-header>
+    <the-header></the-header>
     <the-body class="the-body"></the-body>
   </div>
 </template>
@@ -29,10 +29,6 @@ body {
   display: flex;
   flex-direction: column;
   height: 100vh;
-}
-
-.the-header {
-  height: 5vh;
 }
 
 .the-body {
