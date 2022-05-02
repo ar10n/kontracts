@@ -14,7 +14,7 @@ export default {
 button {
   border: none;
   border-radius: 5px;
-  width: 100px;
+  width: 150px;
   height: 30px;
   font-family: inherit;
   cursor: pointer;

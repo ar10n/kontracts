@@ -1,10 +1,4 @@
 <template>
-  <details-modal v-if="contractClicked" :contractInfo="contractInfo">
-    <template #actions>
-      <base-button @click="closeModal" mode="base">Закрыть</base-button>
-    </template>
-  </details-modal>
-
   <div class="contracts-table">
     <div class="contracts-table__headers">
       <div class="headers__item">Номер контракта</div>
@@ -14,43 +8,31 @@
       <div class="headers__item">Клиент</div>
       <div class="headers__item">Поставщик</div>
       <div class="headers__item">Регион</div>
+      <div class="headers__item">Претензии</div>
     </div>
     <div class="contracts-table__body">
-      <div v-for="contract in contracts" :key="contract.id" class="body-line" @click="toggleModal(contract)">
-        <div class="body-line__item">{{ contract.number }}</div>
+      <div v-for="contract in contracts" :key="contract.id" class="body-line">
+        <router-link :to="'/contracts/' + contract.id">
+          <div class="body-line__item">{{ contract.number }}</div>
+        </router-link>
         <div class="body-line__item">{{ contract.notice }}</div>
         <div class="body-line__item">{{ contract.start_date }}</div>
         <div class="body-line__item">{{ contract.price }}</div>
         <div class="body-line__item">{{ contract.client.name }}</div>
         <div class="body-line__item">{{ contract.company.name }}</div>
         <div class="body-line__item">{{ contract.region.name }}</div>
+        <div v-if="contract.claims.length > 0" class="body-line__item">Да</div>
+        <div v-else class="body-line__item"></div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import BaseButton from '../UI/BaseButton.vue';
-import DetailsModal from '../UI/DetailsModal.vue';
-
 export default {
-  components: { BaseButton, DetailsModal },
-
   data() {
     return {
-      contractInfo: null,
       contracts: [],
-      contractClicked: false,
-    }
-  },
-
-  methods: {
-    toggleModal(contract) {
-      this.contractInfo = contract;
-      this.contractClicked = !this.contractClicked;
-    },
-    closeModal() {
-      this.contractClicked = false;
     }
   },
 
@@ -58,7 +40,7 @@ export default {
     fetch('http://127.0.0.1:8000/api/v1/contract/list')
       .then(response => response.json())
       .then(data => this.contracts = data);
-  }
+  },
 }
 </script>
 
@@ -70,8 +52,8 @@ export default {
 .contracts-table__headers,
 .body-line {
   display: grid;
-  grid-template-areas: "number notice start-date price client company region";
-  grid-template-columns: 15% 15% 10% 15% 25% 10% 10%;
+  grid-template-areas: "number notice start-date price client company region claim";
+  grid-template-columns: 10% 15% 10% 10% 20% 15% 10% 10%;
   padding-top: 1%;
   padding-bottom: 1%;
   cursor: default;
@@ -119,5 +101,14 @@ export default {
   text-align: center;
   border-right: 1px solid #1d3557;
   font-size: 0.9rem;
+}
+
+.body-line>a {
+  text-decoration: none;
+  color: inherit;
+}
+
+.body-line>a:hover {
+  font-weight: bold;
 }
 </style>

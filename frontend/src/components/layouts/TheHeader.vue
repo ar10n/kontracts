@@ -17,7 +17,7 @@
       <div class="buttons">
         <header-button @click="toggleClientModal">Новый клиент</header-button>
         <header-button @click="toggleContractModal">Новый контракт</header-button>
-        <header-button>Новая претензия</header-button>
+        <!-- <header-button>Новая претензия</header-button> -->
       </div>
     </header>
   </div>

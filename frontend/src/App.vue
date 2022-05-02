@@ -1,16 +1,13 @@
 <template>
-  <div class="container">
-    <the-header></the-header>
-    <the-body class="the-body"></the-body>
-  </div>
+  <the-header class="header"></the-header>
+  <router-view></router-view>
 </template>
 
 <script>
-import TheBody from './components/layouts/TheBody.vue';
 import TheHeader from './components/layouts/TheHeader.vue';
 
 export default {
-  components: { TheBody, TheHeader }
+  components: { TheHeader }
 }
 </script>
 
@@ -25,13 +22,8 @@ body {
   margin: 0;
 }
 
-.container {
-  display: flex;
-  flex-direction: column;
-  height: 100vh;
-}
-
-.the-body {
-  height: 95vh;
+.header {
+  position: sticky;
+  top: 0;
 }
 </style>
