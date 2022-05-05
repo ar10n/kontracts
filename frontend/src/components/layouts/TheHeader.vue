@@ -1,58 +1,22 @@
 <template>
   <div>
-    <contract-modal v-if="newContractClicked">
-      <template #actions>
-        <base-button @click="closeContractModal" mode="base">Закрыть</base-button>
-      </template>
-    </contract-modal>
-
-    <client-modal v-if="newClientClicked">
-      <template #actions>
-        <base-button @click="closeClientModal" mode="base">Закрыть</base-button>
-      </template>
-    </client-modal>
-
     <header>
       <div class="logo">KONTRACTS</div>
+      <router-link to="/">
+        Все контракты
+      </router-link>
+
       <div class="buttons">
-        <header-button @click="toggleClientModal">Новый клиент</header-button>
-        <header-button @click="toggleContractModal">Новый контракт</header-button>
-        <!-- <header-button>Новая претензия</header-button> -->
+        <router-link to="/clients/create">
+          Новый клиент
+        </router-link>
+        <router-link to="/contracts/create">
+          Новый контракт
+        </router-link>
       </div>
     </header>
   </div>
 </template>
-
-<script>
-import BaseButton from '../UI/BaseButton.vue';
-import ClientModal from '../UI/ClientModal.vue';
-import ContractModal from '../UI/ContractModal.vue';
-import HeaderButton from '../UI/HeaderButton.vue';
-
-export default {
-  data() {
-    return {
-      newContractClicked: false,
-      newClientClicked: false,
-    }
-  },
-  components: { BaseButton, HeaderButton, ContractModal, ClientModal },
-  methods: {
-    toggleContractModal() {
-      this.newContractClicked = !this.newContractClicked;
-    },
-    closeContractModal() {
-      this.newContractClicked = false;
-    },
-    toggleClientModal() {
-      this.newClientClicked = !this.newClientClicked;
-    },
-    closeClientModal() {
-      this.newClientClicked = false;
-    },
-  }
-}
-</script>
 
 <style scoped>
 header {
@@ -61,6 +25,28 @@ header {
   justify-content: space-between;
   align-items: center;
   height: 5vh;
+}
+
+a {
+  text-decoration: none;
+  padding: 0.3rem;
+  margin: 0.3rem;
+  border: 1px solid #f1faee;
+  border-radius: 5px;
+  background-color: #1d3557;
+  color: #f1faee;
+}
+
+a:hover {
+  background-color: #f1faee;
+  color: #1d3557;
+  transition: all 300ms ease-out;
+}
+
+.router-link-active {
+  background-color: #f1faee;
+  color: #1d3557;
+  cursor: not-allowed;
 }
 
 .logo {
