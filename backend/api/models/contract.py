@@ -13,13 +13,13 @@ class Contract(models.Model):
     end_date = models.DateField(blank=True, null=True)
     price = models.DecimalField(max_digits=24, decimal_places=2)
     client = models.ForeignKey(
-        Client, on_delete=models.CASCADE, related_name="contracts"
+        Client, on_delete=models.CASCADE, related_name="modules"
     )
     company = models.ForeignKey(
-        Company, on_delete=models.CASCADE, related_name="contracts"
+        Company, on_delete=models.CASCADE, related_name="modules"
     )
     region = models.ForeignKey(
-        Region, on_delete=models.CASCADE, related_name="contracts"
+        Region, on_delete=models.CASCADE, related_name="modules"
     )
     is_done = models.BooleanField(default=False)
     products = models.ManyToManyField(Product)

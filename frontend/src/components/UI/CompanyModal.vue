@@ -1,11 +1,11 @@
 <template>
   <div class="modal-overlay">
     <div class="modal">
-      <h6>Добавление заказчика</h6>
-      <input type="search" @input="clientFilter" ref="inputClient"/>
+      <h6>Добавление поставщика</h6>
+      <input type="search" @input="companyFilter" ref="inputCompany"/>
       <ul>
-        <li v-for="client in filteredClients" :key="client.id" @click="addClient(client)">
-          <span>{{ client.name }}</span></li>
+        <li v-for="company in filteredCompanies" :key="company.id" @click="addCompany(company)">
+          <span>{{ company.name }}</span></li>
       </ul>
       <base-button @click="$emit('close-modal')">Закрыть</base-button>
     </div>
@@ -18,36 +18,36 @@ import BaseButton from "./BaseButton.vue";
 export default {
   data() {
     return {
-      filteredClients: []
+      filteredCompanies: []
     };
   },
   created() {
-    fetch('http://127.0.0.1:8000/api/v1/client/list')
+    fetch('http://127.0.0.1:8000/api/v1/company/list')
       .then(response => response.json())
-      .then(data => this.$store.dispatch('clients/addClients', {clients: data}));
+      .then(data => this.$store.dispatch('comps/addCompanies', {companies: data}));
   },
   components: {BaseButton},
   methods: {
-    // Фильтрация по названию
-    clientFilter() {
-      this.filteredClients = [];
-      const clients = this.$store.getters['clients/clients'];
-      const inputClient = this.$refs.inputClient.value.toLowerCase();
-      if (inputClient.length > 0) {
-        clients.filter(
-          client => {
-            if (client.name.toLowerCase().includes(inputClient)) {
-              this.filteredClients.push(client);
+    // Фильтрация по названию компании
+    companyFilter() {
+      this.filteredCompanies = [];
+      const companies = this.$store.getters['comps/companies'];
+      const inputCompany = this.$refs.inputCompany.value.toLowerCase();
+      if (inputCompany.length > 0) {
+        companies.filter(
+          company => {
+            if (company.name.toLowerCase().includes(inputCompany)) {
+              this.filteredCompanies.push(company);
             }
           }
         );
       } else {
-        this.filteredClients = [];
+        this.filteredCompanies = [];
       }
     },
-    // Добавление в форму + закрытие модала
-    addClient(client) {
-      this.$store.commit('clients/addClient', {client: client});
+    // Добавление компании в форму с закрытием модала
+    addCompany(company) {
+      this.$store.commit('comps/addCompany', {company: company});
       this.$emit('close-modal');
     }
   }

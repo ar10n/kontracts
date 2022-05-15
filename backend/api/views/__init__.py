@@ -1,11 +1,11 @@
-from .claim import ClaimList, ClaimCreate, ClaimReadUpdateDelete
-from .client import ClientList, ClientCreate, ClientReadUpdateDelete
-from .contract import ContractList, ContractCreate, ContractReadUpdateDelete
-from .company import CompanyList, CompanyCreate, CompanyReadUpdateDelete
+from .claim import ClaimCreate, ClaimList, ClaimReadUpdateDelete
+from .client import ClientCreate, ClientList, ClientReadUpdateDelete, ClientSearch
+from .company import CompanyCreate, CompanyList, CompanyReadUpdateDelete, CompanySearch
+from .contract import ContractCreate, ContractList, ContractReadUpdateDelete
 from .manufacturer import (
-    ManufacturerList,
     ManufacturerCreate,
-    ManufacturerReadUpdateDelete
+    ManufacturerList,
+    ManufacturerReadUpdateDelete,
 )
-from .product import ProductList, ProductCreate, ProductReadUpdateDelete
-from .region import RegionList, RegionCreate, RegionReadUpdateDelete
+from .product import ProductCreate, ProductList, ProductReadUpdateDelete
+from .region import RegionCreate, RegionList, RegionReadUpdateDelete, RegionSearch

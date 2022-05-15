@@ -12,9 +12,11 @@
     </div>
     <div class="contracts-table__body">
       <div v-for="contract in contracts" :key="contract.id" class="body-line">
-        <router-link :to="'/contracts/' + contract.id">
-          <div class="body-line__item">{{ contract.number }}</div>
-        </router-link>
+        <div class="body-line__item">
+          <router-link :to="'/contracts/' + contract.id">
+            {{ contract.number }}
+          </router-link>
+        </div>
         <div class="body-line__item">{{ contract.notice }}</div>
         <div class="body-line__item">{{ contract.start_date }}</div>
         <div class="body-line__item">{{ contract.price }}</div>
@@ -30,18 +32,18 @@
 
 <script>
 export default {
-  data() {
-    return {
-      contracts: [],
-    }
-  },
-
   created() {
     fetch('http://127.0.0.1:8000/api/v1/contract/list')
       .then(response => response.json())
-      .then(data => this.contracts = data);
+      .then(data => this.$store.dispatch('cons/addContracts', {contracts: data}));
   },
-}
+  computed: {
+    contracts() {
+      return this.$store.getters['cons/contracts'];
+    }
+  }
+};
+
 </script>
 
 <style scoped>
@@ -86,11 +88,11 @@ export default {
   border-radius: 10px;
 }
 
-.body-line:hover>.body-line__item {
+.body-line:hover > .body-line__item {
   border-right: 1px solid #1d3557;
 }
 
-.body-line:hover>.body-line__item:last-child {
+.body-line:hover > .body-line__item:last-child {
   border-right: none;
 }
 
@@ -103,12 +105,12 @@ export default {
   font-size: 0.9rem;
 }
 
-.body-line>a {
+.body-line__item > a {
   text-decoration: none;
   color: inherit;
 }
 
-.body-line>a:hover {
+.body-line__item > a:hover {
   font-weight: bold;
 }
 </style>

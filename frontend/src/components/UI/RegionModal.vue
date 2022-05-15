@@ -1,11 +1,11 @@
 <template>
   <div class="modal-overlay">
     <div class="modal">
-      <h6>Добавление заказчика</h6>
-      <input type="search" @input="clientFilter" ref="inputClient"/>
+      <h6>Добавление региона</h6>
+      <input type="search" @input="regionFilter" ref="inputRegion"/>
       <ul>
-        <li v-for="client in filteredClients" :key="client.id" @click="addClient(client)">
-          <span>{{ client.name }}</span></li>
+        <li v-for="region in filteredRegions" :key="region.id" @click="addRegion(region)">
+          <span>{{ region.name }}</span></li>
       </ul>
       <base-button @click="$emit('close-modal')">Закрыть</base-button>
     </div>
@@ -18,36 +18,36 @@ import BaseButton from "./BaseButton.vue";
 export default {
   data() {
     return {
-      filteredClients: []
+      filteredRegions: []
     };
   },
   created() {
-    fetch('http://127.0.0.1:8000/api/v1/client/list')
+    fetch('http://127.0.0.1:8000/api/v1/region/list')
       .then(response => response.json())
-      .then(data => this.$store.dispatch('clients/addClients', {clients: data}));
+      .then(data => this.$store.dispatch('regions/addRegions', {regions: data}));
   },
   components: {BaseButton},
   methods: {
-    // Фильтрация по названию
-    clientFilter() {
-      this.filteredClients = [];
-      const clients = this.$store.getters['clients/clients'];
-      const inputClient = this.$refs.inputClient.value.toLowerCase();
-      if (inputClient.length > 0) {
-        clients.filter(
-          client => {
-            if (client.name.toLowerCase().includes(inputClient)) {
-              this.filteredClients.push(client);
+    // Фильтрация по названию региона
+    regionFilter() {
+      this.filteredRegions = [];
+      const regions = this.$store.getters['regions/regions'];
+      const inputRegion = this.$refs.inputRegion.value.toLowerCase();
+      if (inputRegion.length > 0) {
+        regions.filter(
+          region => {
+            if (region.name.toLowerCase().includes(inputRegion)) {
+              this.filteredRegions.push(region);
             }
           }
         );
       } else {
-        this.filteredClients = [];
+        this.filteredRegions = [];
       }
     },
-    // Добавление в форму + закрытие модала
-    addClient(client) {
-      this.$store.commit('clients/addClient', {client: client});
+    // Добавление региона в форму + закрытие модала
+    addRegion(region) {
+      this.$store.commit('regions/addRegion', {region: region});
       this.$emit('close-modal');
     }
   }

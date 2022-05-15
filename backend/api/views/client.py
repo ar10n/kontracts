@@ -1,4 +1,5 @@
 from django.http import Http404
+from rest_framework import filters, generics
 from rest_framework.response import Response
 from rest_framework.status import (
     HTTP_201_CREATED,
@@ -51,3 +52,10 @@ class ClientReadUpdateDelete(APIView):
         obj = self.get_object(pk)
         obj.delete()
         return Response(status=HTTP_204_NO_CONTENT)
+
+
+class ClientSearch(generics.ListAPIView):
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
+    filter_backends = [filters.SearchFilter]
+    search_fields = ["name", "inn"]

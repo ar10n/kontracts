@@ -1,9 +1,8 @@
 <template>
   <div>
     <header>
-      <div class="logo">KONTRACTS</div>
       <router-link to="/">
-        Все контракты
+        KONTRACTS
       </router-link>
 
       <div class="buttons">
@@ -11,7 +10,7 @@
           Новый клиент
         </router-link>
         <router-link to="/contracts/create">
-          Новый контракт
+          Добавить контракт
         </router-link>
       </div>
     </header>
@@ -27,8 +26,16 @@ header {
   height: 5vh;
 }
 
-a {
+header>a {
   text-decoration: none;
+  padding: 0.3rem;
+  margin: 0.3rem;
+  color: #f1faee;
+}
+
+.buttons>a {
+  text-decoration: none;
+  font-size: 0.8rem;
   padding: 0.3rem;
   margin: 0.3rem;
   border: 1px solid #f1faee;
@@ -37,13 +44,13 @@ a {
   color: #f1faee;
 }
 
-a:hover {
+.buttons>a:hover {
   background-color: #f1faee;
   color: #1d3557;
   transition: all 300ms ease-out;
 }
 
-.router-link-active {
+.buttons>.router-link-active {
   background-color: #f1faee;
   color: #1d3557;
   cursor: not-allowed;
