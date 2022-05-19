@@ -60,12 +60,17 @@
       </div>
     </div>
 
+    <!-- Выбор товаров и признака исполнения -->
     <div class="form-line">
       <div class="form-line__item">
-        <label for="products">Товары</label>
-        <select multiple size="5" id="products" name="products" ref="productsInput">
-          <option :value="product.id" v-for="product in products" :key="product.id">{{ product.name }}</option>
-        </select>
+        <div>Товары</div>
+        <div v-if="products.length < 1" @click="productsModal = true">
+          <base-button>Добавить</base-button>
+        </div>
+        <div v-else>
+          <div class="selected-item" v-for="product in products" :key="product.id">{{ product.product.name }}<span
+              @click="removeProducts">X</span></div>
+        </div>
       </div>
       <div class="form-line__item">
         <div>Признак выполнения</div>
@@ -91,6 +96,7 @@
   <company-modal v-show="companyModal" @close-modal="companyModal = false"></company-modal>
   <client-modal v-show="clientModal" @close-modal="clientModal = false"></client-modal>
   <region-modal v-show="regionModal" @close-modal="regionModal = false"></region-modal>
+  <products-modal v-show="productsModal" @close-modal="productsModal = false"></products-modal>
 
 </template>
 
@@ -98,14 +104,15 @@
 import BaseButton from '../UI/BaseButton.vue';
 import ClientModal from "../UI/ClientModal.vue";
 import CompanyModal from "../UI/CompanyModal.vue";
+import ProductsModal from "../UI/ProductsModal.vue";
 import RegionModal from "../UI/RegionModal.vue";
 
 export default {
   data() {
     return {
-      products: [],
       companyModal: false,
       clientModal: false,
+      productsModal: false,
       regionModal: false
     };
   },
@@ -119,6 +126,9 @@ export default {
     },
     region() {
       return this.$store.getters['regions/region']
+    },
+    products() {
+      return this.$store.getters['prods/getProductsFromInput'];
     }
   },
 
@@ -132,6 +142,9 @@ export default {
     removeRegion() {
       this.$store.commit('regions/removeRegion');
     },
+    removeProducts() {
+      this.$store.commit('prods/removeProducts');
+    },
     submitData() {
       const numberInput = this.$refs.numberInput.value;
       const noticeNumberInput = this.$refs.noticeNumberInput.value;
@@ -143,12 +156,12 @@ export default {
     }
   },
 
-  components: {BaseButton, ClientModal, CompanyModal, RegionModal},
+  components: {BaseButton, ClientModal, CompanyModal, ProductsModal, RegionModal},
 
   created() {
     fetch('http://127.0.0.1:8000/api/v1/product/list')
-      .then(response => response.json())
-      .then(data => this.products = data);
+        .then(response => response.json())
+        .then(data => this.products = data);
   },
 };
 </script>
