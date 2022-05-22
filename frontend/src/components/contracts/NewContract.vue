@@ -10,7 +10,7 @@
         <input id="number" name="number" type="text" ref="numberInput">
       </div>
       <div class="form-line__item">
-        <label for="notice_number">Номер извещения</label>
+        <label for="notice_number">Номер извещения <span>(не обязательно)</span></label>
         <input id="notice_number" name="notice_number" type="text" ref="noticeNumberInput">
       </div>
     </div>
@@ -22,7 +22,7 @@
         <input id="start_date" name="start_date" type="date" ref="startDateInput">
       </div>
       <div class="form-line__item">
-        <label for="end_date">Срок действия</label>
+        <label for="end_date">Срок действия <span>(не обязательно)</span></label>
         <input id="end_date" name="end_date" type="date" ref="endDateInput">
       </div>
     </div>
@@ -69,20 +69,16 @@
         </div>
         <div v-else>
           <div class="selected-item" v-for="product in products" :key="product.id">{{ product.product.name }}<span
-              @click="removeProducts">X</span></div>
+              @click="removeOneProduct(product)">X</span>
+          </div>
+          <base-button @click="removeProducts">Удалить все</base-button>
         </div>
       </div>
       <div class="form-line__item">
-        <div>Признак выполнения</div>
-        <div class="radio">
-          <div class="radio-line">
-            <label for="done">Выполнен</label>
-            <input id="done" name="isdone" type="radio">
-          </div>
-          <div class="radio-line">
-            <label for="undone">Не выполнен</label>
-            <input id="undone" name="isdone" type="radio">
-          </div>
+        <div>Признак выполнения <span>(не обязательно)</span></div>
+        <div class="checkbox">
+          <label for="done">Выполнен</label>
+          <input type="checkbox" name="done" ref="Done">
         </div>
       </div>
     </div>
@@ -113,7 +109,7 @@ export default {
       companyModal: false,
       clientModal: false,
       productsModal: false,
-      regionModal: false
+      regionModal: false,
     };
   },
 
@@ -145,24 +141,56 @@ export default {
     removeProducts() {
       this.$store.commit('prods/removeProducts');
     },
+    removeOneProduct(product) {
+      const productIndex = this
+        .$store
+        .getters['prods/getProductsFromInput']
+        .findIndex((item) => item.product.id === product.product.id);
+      this.$store.commit('prods/removeProduct', productIndex);
+    },
     submitData() {
       const numberInput = this.$refs.numberInput.value;
       const noticeNumberInput = this.$refs.noticeNumberInput.value;
       const startDateInput = this.$refs.startDateInput.value;
       const endDateInput = this.$refs.endDateInput.value;
-      const priceInput = this.$refs.priceInput.value;
+      const priceInput = +this.$refs.priceInput.value;
+      const checkedInput = this.$refs.Done.checked;
 
-      console.log(numberInput, noticeNumberInput, startDateInput, endDateInput, priceInput);
+      const clientId = this.$store.getters['clients/client'].id;
+      const companyId = this.$store.getters['comps/company'].id;
+      const regionId = this.$store.getters['regions/region'].id;
+
+      const productIds = [...this.$store.getters['prods/getProductsIds']];
+
+      const contract = {
+        number: numberInput,
+        notice_number: noticeNumberInput,
+        start_date: startDateInput,
+        end_date: endDateInput.length > 0 ? endDateInput : null,
+        price: priceInput,
+        is_done: checkedInput,
+        client: clientId,
+        company: companyId,
+        region: regionId,
+        products: productIds
+      }
+
+      try {
+        fetch('http://127.0.0.1:8000/api/v1/contract/create', {
+          method: 'POST',
+          body: JSON.stringify(contract),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        })
+      }
+      catch (e) {
+        console.log(e);
+      }
     }
   },
 
-  components: {BaseButton, ClientModal, CompanyModal, ProductsModal, RegionModal},
-
-  created() {
-    fetch('http://127.0.0.1:8000/api/v1/product/list')
-        .then(response => response.json())
-        .then(data => this.products = data);
-  },
+  components: { BaseButton, ClientModal, CompanyModal, ProductsModal, RegionModal },
 };
 </script>
 
@@ -180,7 +208,8 @@ input {
   border: 1px solid #1d3557;
 }
 
-button {
+button,
+.checkbox {
   margin: 5px;
   padding: 5px;
 }
@@ -190,13 +219,19 @@ form {
   flex-direction: column;
 }
 
+label>span,
+div>span {
+  font-size: 0.7rem;
+  font-style: italic;
+}
+
 .selected-item {
   margin: 5px;
   padding: 5px;
   color: #1d3557;
 }
 
-.selected-item > span {
+.selected-item>span {
   margin-left: 5px;
   font-weight: bold;
   color: #E63946;
@@ -213,11 +248,5 @@ form {
   flex-direction: column;
   width: 25%;
   padding: 1rem;
-}
-
-.radio-line {
-  display: flex;
-  justify-content: space-between;
-  margin-top: 1rem;
 }
 </style>

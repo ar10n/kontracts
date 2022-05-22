@@ -2,7 +2,8 @@ export default {
   namespaced: true,
   state: {
     products: [],
-    productsFromInput: []
+    productsFromInput: [],
+    productsIds: []
   },
   mutations: {
     addProducts(state, payload) {
@@ -13,6 +14,9 @@ export default {
     },
     removeProducts(state) {
       state.productsFromInput = [];
+    },
+    removeProduct(state, payload) {
+      state.productsFromInput.splice(payload, 1);
     }
   },
   getters: {
@@ -21,6 +25,11 @@ export default {
     },
     getProductsFromInput(state) {
       return state.productsFromInput;
+    },
+    getProductsIds(state) {
+      state.productsIds = [];
+      state.productsFromInput.forEach(item => state.productsIds.push(item.product.id));
+      return state.productsIds;
     }
   },
   actions: {

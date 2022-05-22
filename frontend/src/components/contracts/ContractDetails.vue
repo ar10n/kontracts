@@ -37,7 +37,7 @@
 
     <div class="claims">
       <div class="claim-header">Претензии</div>
-      <div v-if="contract.claims.length > 1"><div v-for="claim in contract.claims" :key="claim.id">
+      <div v-if="contract.claims.length > 0"><div v-for="claim in contract.claims" :key="claim.id">
         <div class="claim-name">{{ claim.name }} от {{ claim.start_date }}</div>
         <div class="claim-deadline">Срок: {{ claim.deadline }}</div>
         <div class="claim-comment">Комментарий: {{ claim.comment }}</div>

@@ -3,11 +3,19 @@ export default {
   state: {
     contracts: [],
     contractDetails: {
+      number: '',
+      start_date: '',
+      end_date: '',
+      price: 0,
       client: {},
       company: {},
       region: {},
       products: {},
-      claims: {}
+      claims: {
+        deadline: ''
+      },
+      manufacturer: {},
+      is_done: false
     }
   },
   mutations: {

@@ -2,11 +2,17 @@
   <div class="modal-overlay">
     <div class="modal">
       <h6>Добавление товаров</h6>
-      <input type="search" @input="productsFilter" ref="inputProduct"/>
+      <input type="search" @input="productsFilter" ref="inputProduct" />
       <ul>
         <li v-for="product in filteredProducts" :key="product.id" @click="addProduct(product)">
-          <span>{{ product.name }}</span></li>
+          <span>{{ product.name }}</span>
+        </li>
       </ul>
+      <div v-if="selectedProducts.length > 0">
+        <div class="selected-product" v-for="product in selectedProducts" :key="product.id">
+          {{ product.product.name }} <span @click="removeFromSelected(product)">X</span>
+        </div>
+      </div>
       <base-button @click="$emit('close-modal')">Закрыть</base-button>
     </div>
   </div>
@@ -24,9 +30,14 @@ export default {
   created() {
     fetch('http://127.0.0.1:8000/api/v1/product/list')
       .then(response => response.json())
-      .then(data => this.$store.dispatch('prods/addProducts', {products: data}));
+      .then(data => this.$store.dispatch('prods/addProducts', { products: data }));
   },
-  components: {BaseButton},
+  components: { BaseButton },
+  computed: {
+    selectedProducts() {
+      return this.$store.getters['prods/getProductsFromInput'];
+    }
+  },
   methods: {
     // Фильтрация по названию
     productsFilter() {
@@ -45,10 +56,19 @@ export default {
         this.filteredProducts = [];
       }
     },
-    // Добавление в форму + закрытие модала
+    // Добавление в список продуктов и форму
     addProduct(product) {
-      this.$store.commit('prods/addProduct', {product: product});
-      // this.$emit('close-modal');
+      this.$store.commit('prods/addProduct', { product: product });
+      this.filteredProducts = [];
+      this.$refs.inputProduct.value = '';
+    },
+    // Удаление из списка продуктов и формы
+    removeFromSelected(product) {
+      const productIndex = this
+        .$store
+        .getters['prods/getProductsFromInput']
+        .findIndex((item) => item.product.id === product.product.id);
+      this.$store.commit('prods/removeProduct', productIndex);
     }
   }
 };
@@ -111,5 +131,10 @@ button {
   font-size: 14px;
   border-radius: 16px;
   margin-top: 50px;
+}
+
+.selected-product {
+  color: #457B9D;
+  font-style: italic;
 }
 </style>
