@@ -2,7 +2,7 @@
   <div class="contract-details">
     <div class="details">
 
-      <div class="client-header">Договор №{{ contract.number }} от {{ contract.start_date }}</div>
+      <div class="custom-h">Договор №{{ contract.number }} от {{ contract.start_date }}</div>
 
       <div class="client">
         <div class="client-name">Заказчик: {{ contract.client.name }}</div>
@@ -27,24 +27,61 @@
       <div>Регион: {{ contract.region.name }}</div>
       <div>Срок действия: {{ contract.end_date }}</div>
       <div>Цена: {{ contract.price }}</div>
+      <div>Кол-во дней на поставку: {{ contract.days_to_deliver }}</div>
+      <div>Срок оплаты: {{ contract.days_to_pay }}</div>
+
       <div class="line"></div>
+
       <div>Товары:</div>
       <div v-for="product in contract.products" :key="product.id">
         {{ product.name }} ({{ product.manufacturer.name }})
       </div>
 
+      <div class="line"></div>
+
+      <div class="custom-h">Претензии</div>
+      <div v-if="contract.claims.length > 0">
+        <div v-for="claim in contract.claims" :key="claim.id">
+          <div class="claim-name">{{ claim.name }} от {{ claim.start_date }}</div>
+          <div class="claim-deadline">Срок: {{ claim.deadline }}</div>
+          <div class="claim-comment">Комментарий: {{ claim.comment }}</div>
+        </div>
+      </div>
+      <div v-else>Претензии отсутствуют</div>
+
     </div>
 
-    <div class="claims">
-      <div class="claim-header">Претензии</div>
-      <div v-if="contract.claims.length > 0"><div v-for="claim in contract.claims" :key="claim.id">
-        <div class="claim-name">{{ claim.name }} от {{ claim.start_date }}</div>
-        <div class="claim-deadline">Срок: {{ claim.deadline }}</div>
-        <div class="claim-comment">Комментарий: {{ claim.comment }}</div>
-      </div></div>
-      <div v-else>
-        Претензии отсутствуют
+    <div class="right-side">
+      <div class="custom-h">Отгрузки</div>
+      <div v-if="contract.shipments.length > 0">
+        <div class="shipments-header">
+          <div>№</div>
+          <div>Цена</div>
+          <div>Отгрузка</div>
+          <div>Доставка</div>
+          <div>Оплата</div>
+          <div>Доставлено?</div>
+          <div>Оплачено?</div>
+        </div>
+        <div v-for="shipment in contract.shipments" :key="shipment.id" class="shipments">
+          <div class="shipments-line">
+            <div class="shipments-line__item">{{ shipment.number }}</div>
+            <div class="shipments-line__item">{{ shipment.price }}</div>
+            <div class="shipments-line__item">{{ shipment.start_date }}</div>
+            <div class="shipments-line__item">{{ shipment.delivery_date }}</div>
+            <div class="shipments-line__item">{{ shipment.pay_date }}</div>
+            <div class="shipments-line__item">
+              <div v-if="shipment.is_delivered === true">Да</div>
+              <div v-else class="false">Нет</div>
+            </div>
+            <div class="shipments-line__item">
+              <div v-if="shipment.is_paid === true">Да</div>
+              <div v-else class="false">Нет</div>
+            </div>
+          </div>
+        </div>
       </div>
+      <div v-else>Отгрузки отсутствуют</div>
     </div>
 
   </div>
@@ -82,7 +119,7 @@ export default {
   height: calc(95vh - 2rem);
 }
 
-.client-header {
+.custom-h {
   display: flex;
   justify-content: center;
   padding-bottom: 2rem;
@@ -123,17 +160,8 @@ export default {
   justify-content: space-between;
 }
 
-.claims {
+.right-side {
   padding: 1rem;
-}
-
-.claim-header {
-  display: flex;
-  justify-content: center;
-  padding-bottom: 2rem;
-  font-size: 1.5rem;
-  font-weight: bold;
-  color: #1d3557;
 }
 
 .claim-name {
@@ -157,6 +185,36 @@ export default {
   border-radius: 0 0 10px 10px;
   border-top: none;
   color: #1D3557;
+}
+
+.shipments-header,
+.shipments-line {
+  display: grid;
+  grid-template-areas: "number price start-date days-to-deliver days-to-pay delivered paid";
+  grid-template-columns: 14% 14% 14% 14% 14% 15% 15%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+  text-align: center;
+}
+
+.shipments-header {
+  font-weight: bold;
+}
+
+.shipments-line {
+  background-color: #A8DADC;
+  border-radius: 10px;
+}
+
+.shipments-line__item {
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+.false {
+  color: #E63946;
+  font-weight: bold;
+  font-size: 0.9rem;
 }
 
 .line {

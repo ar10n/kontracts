@@ -11,9 +11,25 @@ export default {
       company: {},
       region: {},
       products: {},
-      claims: {
-        deadline: ''
-      },
+      claims: [
+        {deadline: ''}
+      ],
+      shipments: [
+        {
+          delivery_date: {
+            type: Date
+          },
+          pay_date: {
+            type: Date
+          },
+          is_delivered: {
+            type: Boolean
+          },
+          is_paid: {
+            type: Boolean
+          }
+        },
+      ],
       manufacturer: {},
       is_done: false,
       days_to_deliver: null,

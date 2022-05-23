@@ -6,6 +6,7 @@ from ..serializers.client import ClientSerializer
 from ..serializers.company import CompanySerializer
 from ..serializers.product import ProductSerializer
 from ..serializers.region import RegionSerializer
+from ..serializers.shipment import ShipmentSerializer
 
 
 class ContractSerializer(serializers.ModelSerializer):
@@ -15,6 +16,7 @@ class ContractSerializer(serializers.ModelSerializer):
     products = ProductSerializer(many=True)
 
     claims = ClaimSerializer(many=True)
+    shipments = ShipmentSerializer(many=True)
 
     class Meta:
         model = Contract
