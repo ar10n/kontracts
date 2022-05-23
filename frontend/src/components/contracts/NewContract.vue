@@ -149,30 +149,19 @@ export default {
       this.$store.commit('prods/removeProduct', productIndex);
     },
     submitData() {
-      const numberInput = this.$refs.numberInput.value;
-      const noticeNumberInput = this.$refs.noticeNumberInput.value;
-      const startDateInput = this.$refs.startDateInput.value;
-      const endDateInput = this.$refs.endDateInput.value;
-      const priceInput = +this.$refs.priceInput.value;
-      const checkedInput = this.$refs.Done.checked;
-
-      const clientId = this.$store.getters['clients/client'].id;
-      const companyId = this.$store.getters['comps/company'].id;
-      const regionId = this.$store.getters['regions/region'].id;
-
-      const productIds = [...this.$store.getters['prods/getProductsIds']];
-
       const contract = {
-        number: numberInput,
-        notice_number: noticeNumberInput,
-        start_date: startDateInput,
-        end_date: endDateInput.length > 0 ? endDateInput : null,
-        price: priceInput,
-        is_done: checkedInput,
-        client: clientId,
-        company: companyId,
-        region: regionId,
-        products: productIds
+        number: this.$refs.numberInput.value,
+        notice_number: this.$refs.noticeNumberInput.value,
+        start_date: this.$refs.startDateInput.value,
+        end_date: this.$refs.endDateInput.value.length > 0
+          ? this.$refs.endDateInput.value
+          : null,
+        price: +this.$refs.priceInput.value,
+        is_done: this.$refs.Done.checked,
+        client: this.$store.getters['clients/client'].id,
+        company: this.$store.getters['comps/company'].id,
+        region: this.$store.getters['regions/region'].id,
+        products: [...this.$store.getters['prods/getProductsIds']]
       }
 
       try {

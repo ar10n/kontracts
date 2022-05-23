@@ -15,7 +15,9 @@ export default {
         deadline: ''
       },
       manufacturer: {},
-      is_done: false
+      is_done: false,
+      days_to_deliver: null,
+      days_to_pay: null
     }
   },
   mutations: {

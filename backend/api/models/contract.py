@@ -12,6 +12,8 @@ class Contract(models.Model):
     start_date = models.DateField()
     end_date = models.DateField(blank=True, null=True)
     price = models.DecimalField(max_digits=24, decimal_places=2)
+    days_to_deliver = models.IntegerField(default=1)
+    days_to_pay = models.IntegerField(default=7)
     client = models.ForeignKey(
         Client, on_delete=models.CASCADE, related_name="modules"
     )

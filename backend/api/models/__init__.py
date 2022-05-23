@@ -5,3 +5,4 @@ from .contract import Contract
 from .manufacturer import Manufacturer
 from .product import Product
 from .region import Region
+from .shipment import Shipment

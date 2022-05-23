@@ -8,6 +8,7 @@ from .routes import (
     manufacturer_routes,
     product_routes,
     region_routes,
+    shipment_routes
 )
 
 urlpatterns = [
@@ -18,4 +19,5 @@ urlpatterns = [
     path("manufacturer/", include(manufacturer_routes)),
     path("product/", include(product_routes)),
     path("region/", include(region_routes)),
+    path("shipment/", include(shipment_routes)),
 ]

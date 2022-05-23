@@ -9,3 +9,4 @@ from .manufacturer import (
 )
 from .product import ProductCreate, ProductList, ProductReadUpdateDelete
 from .region import RegionCreate, RegionList, RegionReadUpdateDelete, RegionSearch
+from .shipment import ShipmentCreate, ShipmentList, ShipmentReadUpdateDelete
