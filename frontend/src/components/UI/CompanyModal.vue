@@ -2,10 +2,11 @@
   <div class="modal-overlay">
     <div class="modal">
       <h6>Добавление поставщика</h6>
-      <input type="search" @input="companyFilter" ref="inputCompany"/>
+      <input type="search" @input="companyFilter" ref="inputCompany" />
       <ul>
         <li v-for="company in filteredCompanies" :key="company.id" @click="addCompany(company)">
-          <span>{{ company.name }}</span></li>
+          <span>{{ company.name }}</span>
+        </li>
       </ul>
       <base-button @click="$emit('close-modal')">Закрыть</base-button>
     </div>
@@ -24,9 +25,9 @@ export default {
   created() {
     fetch('http://127.0.0.1:8000/api/v1/company/list')
       .then(response => response.json())
-      .then(data => this.$store.dispatch('comps/addCompanies', {companies: data}));
+      .then(data => this.$store.dispatch('comps/addCompanies', { companies: data }));
   },
-  components: {BaseButton},
+  components: { BaseButton },
   methods: {
     // Фильтрация по названию компании
     companyFilter() {
@@ -47,7 +48,7 @@ export default {
     },
     // Добавление компании в форму с закрытием модала
     addCompany(company) {
-      this.$store.commit('comps/addCompany', {company: company});
+      this.$store.commit('comps/addCompany', { company: company });
       this.$emit('close-modal');
     }
   }
