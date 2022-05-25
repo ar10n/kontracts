@@ -45,6 +45,18 @@
       </div>
     </div>
 
+    <!-- Указание количество дней поставки и оплаты -->
+    <div class="form-line">
+      <div class="form-line__item">
+        <label for="delivery-days">Дней на поставку</label>
+        <input id="delivery-days" name="delivery-days" type="text" ref="deliveryDaysInput">
+      </div>
+      <div class="form-line__item">
+        <label for="pay-days">Дней на оплату</label>
+        <input id="pay-days" name="pay-days" type="text" ref="payDaysInput">
+      </div>
+    </div>
+
     <!-- Указание цены и выбор региона -->
     <div class="form-line">
       <div class="form-line__item">
@@ -69,7 +81,7 @@
         </div>
         <div v-else>
           <div class="selected-item" v-for="product in products" :key="product.id">{{ product.product.name }}<span
-              @click="removeOneProduct(product)">X</span>
+            @click="removeOneProduct(product)">X</span>
           </div>
           <base-button @click="removeProducts">Удалить все</base-button>
         </div>
@@ -121,7 +133,7 @@ export default {
       return this.$store.getters['clients/client'];
     },
     region() {
-      return this.$store.getters['regions/region']
+      return this.$store.getters['regions/region'];
     },
     products() {
       return this.$store.getters['prods/getProductsFromInput'];
@@ -158,11 +170,13 @@ export default {
           : null,
         price: +this.$refs.priceInput.value,
         is_done: this.$refs.Done.checked,
+        days_to_deliver: this.$refs.deliveryDaysInput,
+        days_to_pay: this.$refs.payDaysInput,
         client: this.$store.getters['clients/client'].id,
         company: this.$store.getters['comps/company'].id,
         region: this.$store.getters['regions/region'].id,
         products: [...this.$store.getters['prods/getProductsIds']]
-      }
+      };
 
       try {
         fetch('http://127.0.0.1:8000/api/v1/contract/create', {
@@ -171,15 +185,14 @@ export default {
           headers: {
             'Content-Type': 'application/json'
           }
-        })
-      }
-      catch (e) {
+        });
+      } catch (e) {
         console.log(e);
       }
     }
   },
 
-  components: { BaseButton, ClientModal, CompanyModal, ProductsModal, RegionModal },
+  components: {BaseButton, ClientModal, CompanyModal, ProductsModal, RegionModal},
 };
 </script>
 
@@ -208,8 +221,8 @@ form {
   flex-direction: column;
 }
 
-label>span,
-div>span {
+label > span,
+div > span {
   font-size: 0.7rem;
   font-style: italic;
 }
@@ -220,7 +233,7 @@ div>span {
   color: #1d3557;
 }
 
-.selected-item>span {
+.selected-item > span {
   margin-left: 5px;
   font-weight: bold;
   color: #E63946;
