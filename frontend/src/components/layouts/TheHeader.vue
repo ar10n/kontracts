@@ -6,8 +6,11 @@
       </router-link>
 
       <div class="buttons">
+        <router-link to="/claims/create">
+          Добавить претензию
+        </router-link>
         <router-link to="/clients/create">
-          Новый клиент
+          Добавить клиента
         </router-link>
         <router-link to="/contracts/create">
           Добавить контракт
@@ -26,14 +29,14 @@ header {
   height: 5vh;
 }
 
-header>a {
+header > a {
   text-decoration: none;
   padding: 0.3rem;
   margin: 0.3rem;
   color: #f1faee;
 }
 
-.buttons>a {
+.buttons > a {
   text-decoration: none;
   font-size: 0.8rem;
   padding: 0.3rem;
@@ -44,22 +47,15 @@ header>a {
   color: #f1faee;
 }
 
-.buttons>a:hover {
+.buttons > a:hover {
   background-color: #f1faee;
   color: #1d3557;
   transition: all 300ms ease-out;
 }
 
-.buttons>.router-link-active {
+.buttons > .router-link-active {
   background-color: #f1faee;
   color: #1d3557;
   cursor: not-allowed;
-}
-
-.logo {
-  color: #f1faee;
-  font-size: 1.5rem;
-  padding-left: 10px;
-  cursor: default;
 }
 </style>

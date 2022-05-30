@@ -41,7 +41,7 @@
 
       <div class="custom-h">Претензии</div>
       <div v-if="contract.claims.length > 0">
-        <div v-for="claim in contract.claims" :key="claim.id">
+        <div v-for="claim in contract.claims" :key="claim.id" class="claim">
           <div class="claim-name">{{ claim.name }} от {{ claim.start_date }}</div>
           <div class="claim-deadline">Срок: {{ claim.deadline }}</div>
           <div class="claim-comment">Комментарий: {{ claim.comment }}</div>
@@ -60,23 +60,19 @@
           <div>Отгрузка</div>
           <div>Доставка</div>
           <div>Оплата</div>
-          <div>Доставлено?</div>
-          <div>Оплачено?</div>
         </div>
         <div v-for="shipment in contract.shipments" :key="shipment.id" class="shipments">
           <div class="shipments-line">
             <div class="shipments-line__item">{{ shipment.number }}</div>
             <div class="shipments-line__item">{{ shipment.price }}</div>
             <div class="shipments-line__item">{{ shipment.start_date }}</div>
-            <div class="shipments-line__item">{{ shipment.delivery_date }}</div>
-            <div class="shipments-line__item">{{ shipment.pay_date }}</div>
             <div class="shipments-line__item">
-              <div v-if="shipment.is_delivered === true">Да</div>
-              <div v-else class="false">Нет</div>
+              <span v-if="shipment.is_delivered === true">{{ shipment.delivery_date }}</span>
+              <span v-else class="false">{{ shipment.delivery_date }}</span>
             </div>
             <div class="shipments-line__item">
-              <div v-if="shipment.is_paid === true">Да</div>
-              <div v-else class="false">Нет</div>
+              <span v-if="shipment.pay_date === true">{{ shipment.pay_date }}</span>
+              <span v-else class="false">{{ shipment.pay_date }}</span>
             </div>
           </div>
         </div>
@@ -140,6 +136,11 @@ export default {
   font-weight: bold;
 }
 
+.claim,
+.shipments {
+  padding-bottom: 1rem;
+}
+
 .done {
   font-size: 1.1rem;
   color: #1d3557;
@@ -190,8 +191,8 @@ export default {
 .shipments-header,
 .shipments-line {
   display: grid;
-  grid-template-areas: "number price start-date days-to-deliver days-to-pay delivered paid";
-  grid-template-columns: 14% 14% 14% 14% 14% 15% 15%;
+  grid-template-areas: "number price start-date days-to-deliver days-to-pay";
+  grid-template-columns: 20% 20% 20% 20% 20%;
   padding-top: 1%;
   padding-bottom: 1%;
   text-align: center;

@@ -2,6 +2,7 @@ export default {
   namespaced: true,
   state: {
     contracts: [],
+    contract: [],
     contractDetails: {
       number: '',
       start_date: '',
@@ -42,6 +43,12 @@ export default {
     },
     addContractDetails(state, payload) {
       state.contractDetails = payload.contract;
+    },
+    addContract(state, payload) {
+      state.contract = payload.contract;
+    },
+    removeContract(state) {
+      state.contract = [];
     }
   },
   getters: {
@@ -50,6 +57,9 @@ export default {
     },
     contract(state) {
       return state.contractDetails;
+    },
+    contractInClaim(state) {
+      return state.contract;
     }
   },
   actions: {
@@ -58,6 +68,9 @@ export default {
     },
     async addContractDetails(context, payload) {
       context.commit('addContractDetails', await payload);
+    },
+    async addContract(context, payload) {
+      context.commit('addContract', await payload);
     }
   }
 };

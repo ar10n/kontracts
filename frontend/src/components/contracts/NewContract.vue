@@ -170,8 +170,8 @@ export default {
           : null,
         price: +this.$refs.priceInput.value,
         is_done: this.$refs.Done.checked,
-        days_to_deliver: this.$refs.deliveryDaysInput,
-        days_to_pay: this.$refs.payDaysInput,
+        days_to_deliver: +this.$refs.deliveryDaysInput,
+        days_to_pay: +this.$refs.payDaysInput,
         client: this.$store.getters['clients/client'].id,
         company: this.$store.getters['comps/company'].id,
         region: this.$store.getters['regions/region'].id,
@@ -248,7 +248,7 @@ div > span {
 .form-line__item {
   display: flex;
   flex-direction: column;
-  width: 25%;
+  width: 23.5rem;
   padding: 1rem;
 }
 </style>

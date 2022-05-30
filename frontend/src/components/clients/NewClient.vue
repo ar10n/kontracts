@@ -1,28 +1,27 @@
 <template>
-
   <h2>Новый клиент</h2>
 
   <form @submit.prevent="submitData">
 
     <div class="form-line">
-      <div class="form-line__item">
+      <div class="form-line__item first-line">
         <label for="name">Наименование</label>
         <input id="name" name="name" type="text" ref="nameInput">
-      </div>
-      <div class="form-line__item">
-        <label for="inn">ИНН</label>
-        <input id="inn" name="inn" type="text" ref="innInput">
       </div>
     </div>
 
     <div class="form-line">
-      <div class="form-line__item">
+      <div class="form-line__item second-line">
         <label for="phone">Телефон</label>
         <input id="phone" name="phone" type="text" ref="phoneInput">
       </div>
-      <div class="form-line__item">
+      <div class="form-line__item second-line">
         <label for="email">Email</label>
         <input id="email" name="email" type="email" ref="emailInput">
+      </div>
+      <div class="form-line__item second-line">
+        <label for="inn">ИНН</label>
+        <input id="inn" name="inn" type="text" ref="innInput">
       </div>
     </div>
 
@@ -53,23 +52,17 @@ export default {
       companies: [],
       regions: [],
       products: []
-    }
+    };
   },
-  components: { BaseButton },
+  components: {BaseButton},
   methods: {
     submitData() {
-      const nameInput = this.$refs.nameInput.value;
-      const innInput = this.$refs.innInput.value;
-      const phoneInput = this.$refs.phoneInput.value;
-      const emailInput = this.$refs.emailInput.value;
-      const commentInput = this.$refs.commentInput.value;
-
       const data = {
-        'name': nameInput,
-        'inn': innInput,
-        'phone': phoneInput,
-        'email': emailInput,
-        'comment': commentInput
+        'name': this.$refs.nameInput.value,
+        'inn': this.$refs.innInput.value,
+        'phone': this.$refs.phoneInput.value,
+        'email': this.$refs.emailInput.value,
+        'comment': this.$refs.commentInput.value
       };
 
       fetch('http://127.0.0.1:8000/api/v1/client/create', {
@@ -78,10 +71,10 @@ export default {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
-      })
+      });
     }
   },
-}
+};
 </script>
 
 <style scoped>
@@ -92,6 +85,10 @@ h2 {
 
 input {
   font-family: inherit;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #1d3557;
 }
 
 form {
@@ -99,8 +96,19 @@ form {
   flex-direction: column;
 }
 
+
+label > span,
+div > span {
+  font-size: 0.7rem;
+  font-style: italic;
+}
+
 textarea {
   resize: none;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #1d3557;
 }
 
 .form-line {
@@ -111,14 +119,29 @@ textarea {
 .form-line__item {
   display: flex;
   flex-direction: column;
-  width: 25%;
   padding: 1rem;
+}
+
+.first-line {
+  width: 49rem;
+}
+
+.second-line {
+  width: 15rem;
 }
 
 .form-line__comment {
   display: flex;
   flex-direction: column;
-  width: calc(50% + 2rem);
+  width: 49rem;
   padding: 1rem;
+}
+
+textarea {
+  resize: none;
+  margin: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #1d3557;
 }
 </style>
