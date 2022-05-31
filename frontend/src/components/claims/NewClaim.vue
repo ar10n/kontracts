@@ -71,7 +71,7 @@ export default {
         'start_date': this.$refs.startDateInput.value,
         'deadline': this.$refs.endDateInput.value,
         'comment': this.$refs.commentInput.value,
-        'contract': this.$store.getters['cons/contract'].id
+        'contract': this.$store.getters['cons/contractInClaim'].id
       };
 
       try {
@@ -82,6 +82,7 @@ export default {
             'Content-Type': 'application/json'
           }
         });
+        this.$store.commit('cons/removeContract');
       } catch (e) {
         console.log(e);
       }

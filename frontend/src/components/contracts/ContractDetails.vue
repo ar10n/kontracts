@@ -52,6 +52,7 @@
     </div>
 
     <div class="right-side">
+
       <div class="custom-h">Отгрузки</div>
       <div v-if="contract.shipments.length > 0">
         <div class="shipments-header">
@@ -78,6 +79,7 @@
         </div>
       </div>
       <div v-else>Отгрузки отсутствуют</div>
+
     </div>
 
   </div>

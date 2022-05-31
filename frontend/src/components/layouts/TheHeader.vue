@@ -6,6 +6,9 @@
       </router-link>
 
       <div class="buttons">
+        <router-link to="/shipments/create">
+          Добавить отгрузку
+        </router-link>
         <router-link to="/claims/create">
           Добавить претензию
         </router-link>
