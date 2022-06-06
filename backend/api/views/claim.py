@@ -7,8 +7,8 @@ from rest_framework.status import (
 )
 from rest_framework.views import APIView
 
-from ..models.claim import Claim
-from ..serializers.claim import ClaimSerializer
+from ..models import Claim
+from ..serializers import ClaimSerializer
 
 
 class ClaimList(APIView):

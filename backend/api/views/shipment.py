@@ -7,8 +7,8 @@ from rest_framework.status import (
 )
 from rest_framework.views import APIView
 
-from ..models.shipment import Shipment
-from ..serializers.shipment import ShipmentSerializer
+from ..models import Shipment
+from ..serializers import ShipmentSerializer
 
 
 class ShipmentList(APIView):

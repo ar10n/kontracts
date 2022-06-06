@@ -13,7 +13,7 @@ export default {
       region: {},
       products: {},
       claims: [
-        {deadline: ''}
+        { deadline: '' }
       ],
       shipments: [
         {

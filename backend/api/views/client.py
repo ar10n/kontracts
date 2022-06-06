@@ -8,8 +8,8 @@ from rest_framework.status import (
 )
 from rest_framework.views import APIView
 
-from ..models.client import Client
-from ..serializers.client import ClientSerializer
+from ..models import Client
+from ..serializers import ClientSerializer
 
 
 class ClientList(APIView):

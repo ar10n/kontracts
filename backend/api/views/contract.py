@@ -7,8 +7,8 @@ from rest_framework.status import (
 )
 from rest_framework.views import APIView
 
-from ..models.contract import Contract
-from ..serializers.contract import ContractCreateSerializer, ContractSerializer
+from ..models import Contract
+from ..serializers import ContractCreateSerializer, ContractSerializer
 
 
 class ContractList(APIView):

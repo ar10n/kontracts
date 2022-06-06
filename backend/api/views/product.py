@@ -7,8 +7,8 @@ from rest_framework.status import (
 )
 from rest_framework.views import APIView
 
-from ..models.product import Product
-from ..serializers.product import ProductSerializer, ProductCreateSerializer
+from ..models import Product
+from ..serializers import ProductCreateSerializer, ProductSerializer
 
 
 class ProductList(APIView):

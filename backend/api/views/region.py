@@ -8,8 +8,8 @@ from rest_framework.status import (
 )
 from rest_framework.views import APIView
 
-from ..models.region import Region
-from ..serializers.region import RegionSerializer
+from ..models import Region
+from ..serializers import RegionSerializer
 
 
 class RegionList(APIView):
