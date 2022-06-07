@@ -7,7 +7,7 @@
 import TheHeader from './components/layouts/TheHeader.vue';
 
 export default {
-  components: {TheHeader},
+  components: { TheHeader },
 };
 </script>
 

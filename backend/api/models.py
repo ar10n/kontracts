@@ -2,8 +2,8 @@ from django.db import models
 
 
 class Client(models.Model):
-    name = models.CharField(max_length=64)
-    inn = models.CharField(max_length=10)
+    name = models.CharField(max_length=64, unique=True)
+    inn = models.CharField(max_length=10, unique=True)
     phone = models.CharField(max_length=10, blank=True)
     email = models.CharField(max_length=64, blank=True)
     comment = models.TextField(blank=True)
@@ -20,7 +20,7 @@ class Company(models.Model):
 
 
 class Manufacturer(models.Model):
-    name = models.CharField(max_length=128)
+    name = models.CharField(max_length=128, unique=True)
 
     def __str__(self):
         return self.name
@@ -37,7 +37,7 @@ class Product(models.Model):
 
 
 class Region(models.Model):
-    name = models.CharField(max_length=64)
+    name = models.CharField(max_length=64, unique=True)
 
     def __str__(self):
         return self.name

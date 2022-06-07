@@ -23,7 +23,19 @@
   </div>
 </template>
 
+<script>
+import { RouterLink } from 'vue-router';
+
+export default {
+  components: { RouterLink }
+}
+</script>
+
 <style scoped>
+.menu {
+  color: red;
+}
+
 header {
   background-color: #1d3557;
   display: flex;
@@ -32,14 +44,14 @@ header {
   height: 5vh;
 }
 
-header > a {
+header>a {
   text-decoration: none;
   padding: 0.3rem;
   margin: 0.3rem;
   color: #f1faee;
 }
 
-.buttons > a {
+.buttons>a {
   text-decoration: none;
   font-size: 0.8rem;
   padding: 0.3rem;
@@ -50,13 +62,13 @@ header > a {
   color: #f1faee;
 }
 
-.buttons > a:hover {
+.buttons>a:hover {
   background-color: #f1faee;
   color: #1d3557;
   transition: all 300ms ease-out;
 }
 
-.buttons > .router-link-active {
+.buttons>.router-link-active {
   background-color: #f1faee;
   color: #1d3557;
   cursor: not-allowed;
