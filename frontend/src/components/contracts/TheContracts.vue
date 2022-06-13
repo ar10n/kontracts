@@ -33,9 +33,14 @@
 <script>
 export default {
   created() {
-    fetch('http://127.0.0.1:8000/api/v1/contract/list')
+    fetch('http://127.0.0.1:8000/api/v1/contract/list', {
+      method: 'GET',
+      headers: {
+        'Authorization': `JWT ${ this.$store.getters['users/getToken'] }`
+      }
+    })
       .then(response => response.json())
-      .then(data => this.$store.dispatch('cons/addContracts', {contracts: data}));
+      .then(data => this.$store.dispatch('cons/addContracts', { contracts: data }));
   },
   computed: {
     contracts() {
@@ -88,11 +93,11 @@ export default {
   border-radius: 10px;
 }
 
-.body-line:hover > .body-line__item {
+.body-line:hover>.body-line__item {
   border-right: 1px solid #1d3557;
 }
 
-.body-line:hover > .body-line__item:last-child {
+.body-line:hover>.body-line__item:last-child {
   border-right: none;
 }
 
@@ -105,12 +110,12 @@ export default {
   font-size: 0.9rem;
 }
 
-.body-line__item > a {
+.body-line__item>a {
   text-decoration: none;
   color: inherit;
 }
 
-.body-line__item > a:hover {
+.body-line__item>a:hover {
   font-weight: bold;
 }
 </style>

@@ -54,7 +54,7 @@ export default {
       products: []
     };
   },
-  components: {BaseButton},
+  components: { BaseButton },
   methods: {
     submitData() {
       const data = {
@@ -68,7 +68,8 @@ export default {
       fetch('http://127.0.0.1:8000/api/v1/client/create', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json'
+          'Content-Type': 'application/json',
+          'Authorization': `JWT ${ this.$store.getters['users/getToken'] }`
         },
         body: JSON.stringify(data)
       });
@@ -97,8 +98,8 @@ form {
 }
 
 
-label > span,
-div > span {
+label>span,
+div>span {
   font-size: 0.7rem;
   font-style: italic;
 }

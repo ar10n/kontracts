@@ -28,7 +28,12 @@ export default {
     };
   },
   created() {
-    fetch('http://127.0.0.1:8000/api/v1/product/list')
+    fetch('http://127.0.0.1:8000/api/v1/product/list', {
+      method: 'GET',
+      headers: {
+        'Authorization': `JWT ${ this.$store.getters['users/getToken'] }`
+      }
+    })
       .then(response => response.json())
       .then(data => this.$store.dispatch('prods/addProducts', { products: data }));
   },

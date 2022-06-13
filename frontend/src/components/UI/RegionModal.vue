@@ -2,10 +2,11 @@
   <div class="modal-overlay">
     <div class="modal">
       <h6>Добавление региона</h6>
-      <input type="search" @input="regionFilter" ref="inputRegion"/>
+      <input type="search" @input="regionFilter" ref="inputRegion" />
       <ul>
         <li v-for="region in filteredRegions" :key="region.id" @click="addRegion(region)">
-          <span>{{ region.name }}</span></li>
+          <span>{{ region.name }}</span>
+        </li>
       </ul>
       <base-button @click="$emit('close-modal')">Закрыть</base-button>
     </div>
@@ -22,11 +23,16 @@ export default {
     };
   },
   created() {
-    fetch('http://127.0.0.1:8000/api/v1/region/list')
+    fetch('http://127.0.0.1:8000/api/v1/region/list', {
+      method: 'GET',
+      headers: {
+        'Authorization': `JWT ${ this.$store.getters['users/getToken'] }`
+      }
+    })
       .then(response => response.json())
-      .then(data => this.$store.dispatch('regions/addRegions', {regions: data}));
+      .then(data => this.$store.dispatch('regions/addRegions', { regions: data }));
   },
-  components: {BaseButton},
+  components: { BaseButton },
   methods: {
     // Фильтрация по названию региона
     regionFilter() {
@@ -47,7 +53,7 @@ export default {
     },
     // Добавление региона в форму + закрытие модала
     addRegion(region) {
-      this.$store.commit('regions/addRegion', {region: region});
+      this.$store.commit('regions/addRegion', { region: region });
       this.$emit('close-modal');
     }
   }

@@ -2,10 +2,11 @@
   <div class="modal-overlay">
     <div class="modal">
       <h6>Добавление контракта</h6>
-      <input type="search" @input="contractFilter" ref="inputContract"/>
+      <input type="search" @input="contractFilter" ref="inputContract" />
       <ul>
         <li v-for="contract in filteredContracts" :key="contract.id" @click="addContract(contract)">
-          <span>{{ contract.number }}</span></li>
+          <span>{{ contract.number }}</span>
+        </li>
       </ul>
       <base-button @click="$emit('close-modal')">Закрыть</base-button>
     </div>
@@ -22,11 +23,16 @@ export default {
     };
   },
   created() {
-    fetch('http://127.0.0.1:8000/api/v1/contract/list')
+    fetch('http://127.0.0.1:8000/api/v1/contract/list', {
+      method: 'GET',
+      headers: {
+        'Authorization': `JWT ${ this.$store.getters['users/getToken'] }`
+      }
+    })
       .then(response => response.json())
-      .then(data => this.$store.dispatch('cons/addContracts', {contracts: data}));
+      .then(data => this.$store.dispatch('cons/addContracts', { contracts: data }));
   },
-  components: {BaseButton},
+  components: { BaseButton },
   methods: {
     // Фильтрация по названию
     contractFilter() {
@@ -47,7 +53,7 @@ export default {
     },
     // Добавление в форму + закрытие модала
     addContract(contract) {
-      this.$store.commit('cons/addContract', {contract: contract});
+      this.$store.commit('cons/addContract', { contract: contract });
       this.$emit('close-modal');
     }
   }

@@ -2,10 +2,11 @@
   <div class="modal-overlay">
     <div class="modal">
       <h6>Добавление заказчика</h6>
-      <input type="search" @input="clientFilter" ref="inputClient"/>
+      <input type="search" @input="clientFilter" ref="inputClient" />
       <ul>
         <li v-for="client in filteredClients" :key="client.id" @click="addClient(client)">
-          <span>{{ client.name }}</span></li>
+          <span>{{ client.name }}</span>
+        </li>
       </ul>
       <base-button @click="$emit('close-modal')">Закрыть</base-button>
     </div>
@@ -22,11 +23,16 @@ export default {
     };
   },
   created() {
-    fetch('http://127.0.0.1:8000/api/v1/client/list')
+    fetch('http://127.0.0.1:8000/api/v1/client/list', {
+      method: 'GET',
+      headers: {
+        'Authorization': `JWT ${ this.$store.getters['users/getToken'] }`
+      }
+    })
       .then(response => response.json())
-      .then(data => this.$store.dispatch('clients/addClients', {clients: data}));
+      .then(data => this.$store.dispatch('clients/addClients', { clients: data }));
   },
-  components: {BaseButton},
+  components: { BaseButton },
   methods: {
     // Фильтрация по названию
     clientFilter() {
@@ -47,7 +53,7 @@ export default {
     },
     // Добавление в форму + закрытие модала
     addClient(client) {
-      this.$store.commit('clients/addClient', {client: client});
+      this.$store.commit('clients/addClient', { client: client });
       this.$emit('close-modal');
     }
   }

@@ -58,7 +58,7 @@ export default {
     }
   },
   name: "NewClaim",
-  components: {BaseButton, ContractModal},
+  components: { BaseButton, ContractModal },
   computed: {
     contract() {
       return this.$store.getters['cons/contractInClaim'];
@@ -79,7 +79,8 @@ export default {
           method: 'POST',
           body: JSON.stringify(data),
           headers: {
-            'Content-Type': 'application/json'
+            'Content-Type': 'application/json',
+            'Authorization': `JWT ${ this.$store.getters['users/getToken'] }`
           }
         });
         this.$store.commit('cons/removeContract');
@@ -147,7 +148,7 @@ textarea {
   border: 1px solid #1d3557;
 }
 
-.selected-item > span {
+.selected-item>span {
   margin-left: 5px;
   font-weight: bold;
   color: #E63946;

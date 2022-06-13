@@ -90,11 +90,16 @@
 export default {
   created() {
     const id = this.$route.params.id;
-    const url = `http://127.0.0.1:8000/api/v1/contract/${id}`;
+    const url = `http://127.0.0.1:8000/api/v1/contract/${ id }`;
 
-    fetch(url)
+    fetch(url, {
+      method: 'GET',
+      headers: {
+        'Authorization': `JWT ${ this.$store.getters['users/getToken'] }`
+      }
+    })
       .then(response => response.json())
-      .then(data => this.$store.dispatch('cons/addContractDetails', {contract: data}));
+      .then(data => this.$store.dispatch('cons/addContractDetails', { contract: data }));
   },
   computed: {
     contract() {
