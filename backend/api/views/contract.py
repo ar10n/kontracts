@@ -1,4 +1,5 @@
 from django.http import Http404
+from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework.status import (
     HTTP_201_CREATED,
@@ -12,6 +13,8 @@ from ..serializers import ContractCreateSerializer, ContractSerializer
 
 
 class ContractList(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
     def get(self, request):
         obj = Contract.objects.all()
         serializer = ContractSerializer(obj, many=True)
@@ -19,6 +22,8 @@ class ContractList(APIView):
 
 
 class ContractCreate(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
     def post(self, request):
         serializer = ContractCreateSerializer(data=request.data)
         if serializer.is_valid():
@@ -28,6 +33,8 @@ class ContractCreate(APIView):
 
 
 class ContractReadUpdateDelete(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
     def get_object(self, pk):
         try:
             return Contract.objects.get(pk=pk)

@@ -1,3 +1,5 @@
+from django.contrib.auth.hashers import make_password
+from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from .models import (
@@ -10,6 +12,23 @@ from .models import (
     Region,
     Shipment,
 )
+
+
+class UserRegistrationSerialzier(serializers.ModelSerializer):
+    class Meta:
+        model = User
+        fields = ["username", "email", "first_name", "last_name", "password"]
+
+    def create(self, validated_data):
+        user = User.objects.create(
+            username=validated_data["username"],
+            email=validated_data["email"],
+            first_name=validated_data["first_name"],
+            last_name=validated_data["last_name"],
+            password=make_password(validated_data["password"]),
+        )
+        user.save()
+        return user
 
 
 class ClaimSerializer(serializers.ModelSerializer):

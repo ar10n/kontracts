@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -58,6 +59,7 @@ class Contract(models.Model):
     region = models.ForeignKey(Region, on_delete=models.CASCADE, related_name="modules")
     is_done = models.BooleanField(default=False)
     products = models.ManyToManyField(Product)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.number
@@ -71,6 +73,7 @@ class Claim(models.Model):
     contract = models.ForeignKey(
         Contract, on_delete=models.CASCADE, related_name="claims"
     )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -87,6 +90,7 @@ class Shipment(models.Model):
     contract = models.ForeignKey(
         Contract, on_delete=models.CASCADE, related_name="shipments"
     )
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.number

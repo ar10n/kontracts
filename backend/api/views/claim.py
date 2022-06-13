@@ -1,4 +1,5 @@
 from django.http import Http404
+from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework.status import (
     HTTP_201_CREATED,
@@ -12,6 +13,8 @@ from ..serializers import ClaimSerializer
 
 
 class ClaimList(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
     def get(self, request):
         obj = Claim.objects.all()
         serializer = ClaimSerializer(obj, many=True)
@@ -19,6 +22,8 @@ class ClaimList(APIView):
 
 
 class ClaimCreate(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
     def post(self, request):
         serializer = ClaimSerializer(data=request.data)
         if serializer.is_valid():
@@ -28,6 +33,8 @@ class ClaimCreate(APIView):
 
 
 class ClaimReadUpdateDelete(APIView):
+    permission_classes = (permissions.IsAuthenticated,)
+
     def get_object(self, pk):
         try:
             return Claim.objects.get(pk=pk)

@@ -12,6 +12,8 @@ from .routes import (
 )
 
 urlpatterns = [
+    path("auth/", include("djoser.urls")),
+    path("auth/", include("djoser.urls.jwt")),
     path("claim/", include(claim_routes)),
     path("client/", include(client_routes)),
     path("company/", include(company_routes)),
