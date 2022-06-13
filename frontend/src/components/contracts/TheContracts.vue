@@ -32,20 +32,21 @@
 
 <script>
 export default {
-  created() {
-    fetch('http://127.0.0.1:8000/api/v1/contract/list', {
+  async created() {
+    await fetch('http://127.0.0.1:8000/api/v1/contract/list', {
       method: 'GET',
       headers: {
+        'Content-Type': 'application/json',
         'Authorization': `JWT ${ this.$store.getters['users/getToken'] }`
       }
     })
       .then(response => response.json())
-      .then(data => this.$store.dispatch('cons/addContracts', { contracts: data }));
+      .then(async data => this.$store.dispatch('cons/addContracts', { contracts: data }))
   },
   computed: {
     contracts() {
       return this.$store.getters['cons/contracts'];
-    }
+    },
   }
 };
 

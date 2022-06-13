@@ -31,31 +31,33 @@ import BaseButton from '../UI/BaseButton.vue';
 export default {
   components: { BaseButton },
   methods: {
-    submitData() {
+    async submitData() {
       const user = {
         username: this.$refs.loginInput.value,
         password: this.$refs.passwordInput.value
       }
 
-      try {
-        fetch('http://127.0.0.1:8000/api/v1/auth/jwt/create/', {
-          method: 'POST',
-          body: JSON.stringify(user),
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).then(response => response.json()).then(data => {
-          this.$store.commit('users/setUser', user.username);
-          this.$store.commit('users/setToken', data.access);
-          this.$router.push('/');
-        })
-      } catch (e) {
-        console.log(e);
-      }
+      await fetch('http://127.0.0.1:8000/api/v1/auth/jwt/create/', {
+        method: 'POST',
+        body: JSON.stringify(user),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then(async response => response.json()).then(async data => {
+        this.$store.commit('users/setUser', user.username);
+        this.$store.commit('users/setToken', data.access);
+      })
+
+      await fetch('http://127.0.0.1:8000/api/v1/auth/users/me', {
+        method: 'GET',
+        headers: {
+          'Authorization': `JWT ${ this.$store.getters['users/getToken'] }`
+        }
+      }).then(async response => response.json()).then(async data =>
+        this.$store.commit('users/setId', data.id));
+
+      this.$router.push('/');
     },
-    setLogined(token) {
-      console.log(token);
-    }
   }
 }
 </script>

@@ -170,26 +170,25 @@ export default {
           : null,
         price: +this.$refs.priceInput.value,
         is_done: this.$refs.Done.checked,
-        days_to_deliver: +this.$refs.deliveryDaysInput,
-        days_to_pay: +this.$refs.payDaysInput,
+        days_to_deliver: +this.$refs.deliveryDaysInput.value,
+        days_to_pay: +this.$refs.payDaysInput.value,
         client: this.$store.getters['clients/client'].id,
         company: this.$store.getters['comps/company'].id,
         region: this.$store.getters['regions/region'].id,
-        products: [...this.$store.getters['prods/getProductsIds']]
+        products: [...this.$store.getters['prods/getProductsIds']],
+        user: +this.$store.getters['users/getId']
       };
 
-      try {
-        fetch('http://127.0.0.1:8000/api/v1/contract/create', {
-          method: 'POST',
-          body: JSON.stringify(contract),
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `JWT ${ this.$store.getters['users/getToken'] }`
-          }
-        });
-      } catch (e) {
-        console.log(e);
-      }
+      fetch('http://127.0.0.1:8000/api/v1/contract/create', {
+        method: 'POST',
+        body: JSON.stringify(contract),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `JWT ${ this.$store.getters['users/getToken'] }`
+        }
+      });
+
+      this.$router.push('/');
     }
   },
 

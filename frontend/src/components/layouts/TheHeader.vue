@@ -5,22 +5,7 @@
         KONTRACTS
       </router-link>
 
-      <!-- <div class="buttons">
-        <router-link to="/shipments/create">
-          Добавить отгрузку
-        </router-link>
-        <router-link to="/claims/create">
-          Добавить претензию
-        </router-link>
-        <router-link to="/clients/create">
-          Добавить клиента
-        </router-link>
-        <router-link to="/contracts/create">
-          Добавить контракт
-        </router-link>
-      </div> -->
-
-      <div class="menu" @click="isOpen = !isOpen">
+      <div class="menu" @click="isOpen = !isOpen" v-if="isLoggedIn == true">
         МЕНЮ
         <transition name="fade" appear>
           <div class="sub-menu" v-if="isOpen">
@@ -49,10 +34,15 @@ import { RouterLink } from 'vue-router';
 export default {
   data() {
     return {
-      isOpen: false
+      isOpen: false,
     }
   },
-  components: { RouterLink }
+  components: { RouterLink },
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters['users/getToken'] ? true : false;
+    }
+  }
 }
 </script>
 
