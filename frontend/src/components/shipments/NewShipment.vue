@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import { serverUrl } from '../../config.js';
 import BaseButton from "../UI/BaseButton.vue";
 import ContractModal from "../UI/ContractModal.vue";
 
@@ -75,7 +76,7 @@ export default {
     };
   },
   name: "NewShipment",
-  components: {BaseButton, ContractModal},
+  components: { BaseButton, ContractModal },
   computed: {
     contract() {
       return this.$store.getters['cons/contractInClaim'];
@@ -95,7 +96,7 @@ export default {
       };
 
       try {
-        fetch('http://127.0.0.1:8000/api/v1/shipment/create', {
+        fetch(`${ serverUrl }/api/v1/shipment/create`, {
           method: 'POST',
           body: JSON.stringify(data),
           headers: {
@@ -152,8 +153,8 @@ form {
   width: 15rem;
 }
 
-label > span,
-div > span {
+label>span,
+div>span {
   font-size: 0.7rem;
   font-style: italic;
 }
@@ -164,7 +165,7 @@ button,
   padding: 5px;
 }
 
-.selected-item > span {
+.selected-item>span {
   margin-left: 5px;
   font-weight: bold;
   color: #E63946;

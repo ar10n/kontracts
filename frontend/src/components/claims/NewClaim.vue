@@ -48,6 +48,7 @@
 </template>
 
 <script>
+import { serverUrl } from '../../config.js';
 import BaseButton from '../UI/BaseButton.vue';
 import ContractModal from "../UI/ContractModal.vue";
 
@@ -75,7 +76,7 @@ export default {
       };
 
       try {
-        fetch('http://127.0.0.1:8000/api/v1/claim/create', {
+        fetch(`${ serverUrl }/api/v1/claim/create`, {
           method: 'POST',
           body: JSON.stringify(data),
           headers: {

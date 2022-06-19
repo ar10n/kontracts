@@ -19,13 +19,14 @@
       <base-button type="submit" mode="submit">Войти</base-button>
     </div>
 
-    <div class="form-line">
+    <!-- <div class="form-line">
       <div class="signup-text">Еще не зарегистрированы?</div>
       <router-link class="signup-link" to="/signup">Регистрация</router-link>
-    </div>
+    </div> -->
   </form>
 </template>
 <script>
+import { serverUrl } from '../../config.js';
 import BaseButton from '../UI/BaseButton.vue';
 
 export default {
@@ -37,7 +38,7 @@ export default {
         password: this.$refs.passwordInput.value
       }
 
-      await fetch('http://127.0.0.1:8000/api/v1/auth/jwt/create/', {
+      await fetch(`${ serverUrl }/api/v1/auth/jwt/create/`, {
         method: 'POST',
         body: JSON.stringify(user),
         headers: {
@@ -48,7 +49,7 @@ export default {
         this.$store.commit('users/setToken', data.access);
       })
 
-      await fetch('http://127.0.0.1:8000/api/v1/auth/users/me', {
+      await fetch(`${ serverUrl }/api/v1/auth/users/me`, {
         method: 'GET',
         headers: {
           'Authorization': `JWT ${ this.$store.getters['users/getToken'] }`

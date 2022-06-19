@@ -4,4 +4,5 @@ from .company import CompanyList, CompanySearch
 from .contract import ContractCreate, ContractList, ContractReadUpdateDelete
 from .manufacturer import ManufacturerList
 from .product import ProductList
+from .region import RegionList
 from .shipment import ShipmentCreate, ShipmentList, ShipmentReadUpdateDelete

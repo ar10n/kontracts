@@ -1,13 +1,25 @@
 <template>
-  <the-header class="header"></the-header>
-  <router-view></router-view>
+  <div v-if="isLoggedIn == true">
+    <the-header class="header"></the-header>
+    <router-view></router-view>
+  </div>
+  <div v-else>
+    <sign-in></sign-in>
+  </div>
 </template>
 
 <script>
+import SignIn from './components/auth/SignIn.vue';
 import TheHeader from './components/layouts/TheHeader.vue';
 
 export default {
-  components: { TheHeader },
+  components: { TheHeader, SignIn },
+
+  computed: {
+    isLoggedIn() {
+      return this.$store.getters['users/getToken'] ? true : false;
+    }
+  }
 };
 </script>
 

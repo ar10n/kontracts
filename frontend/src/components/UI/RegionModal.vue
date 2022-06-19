@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { serverUrl } from '../../config.js';
 import BaseButton from "./BaseButton.vue";
 
 export default {
@@ -23,7 +24,7 @@ export default {
     };
   },
   created() {
-    fetch('http://127.0.0.1:8000/api/v1/region/list', {
+    fetch(`${ serverUrl }/api/v1/region/list`, {
       method: 'GET',
       headers: {
         'Authorization': `JWT ${ this.$store.getters['users/getToken'] }`

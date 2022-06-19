@@ -31,9 +31,11 @@
 </template>
 
 <script>
+import { serverUrl } from '../../config.js';
+
 export default {
   async created() {
-    await fetch('http://127.0.0.1:8000/api/v1/contract/list', {
+    await fetch(`${ serverUrl }/api/v1/contract/list`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',

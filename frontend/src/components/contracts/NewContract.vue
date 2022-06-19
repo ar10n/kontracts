@@ -109,6 +109,7 @@
 </template>
 
 <script>
+import { serverUrl } from '../../config.js';
 import BaseButton from '../UI/BaseButton.vue';
 import ClientModal from "../UI/ClientModal.vue";
 import CompanyModal from "../UI/CompanyModal.vue";
@@ -179,7 +180,7 @@ export default {
         user: +this.$store.getters['users/getId']
       };
 
-      fetch('http://127.0.0.1:8000/api/v1/contract/create', {
+      fetch(`${ serverUrl }/api/v1/contract/create`, {
         method: 'POST',
         body: JSON.stringify(contract),
         headers: {

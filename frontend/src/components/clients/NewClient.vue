@@ -43,6 +43,7 @@
 </template>
 
 <script>
+import { serverUrl } from '../../config.js';
 import BaseButton from '../UI/BaseButton.vue';
 
 export default {
@@ -65,7 +66,7 @@ export default {
         'comment': this.$refs.commentInput.value
       };
 
-      fetch('http://127.0.0.1:8000/api/v1/client/create', {
+      fetch(`${ serverUrl }/api/v1/client/create`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

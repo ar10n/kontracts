@@ -47,6 +47,7 @@
 
 </template>
 <script>
+import { serverUrl } from '../../config.js';
 import BaseButton from '../UI/BaseButton.vue';
 import PwdModal from '../UI/PwdModal.vue';
 
@@ -77,7 +78,7 @@ export default {
         }
 
         try {
-          fetch('http://127.0.0.1:8000/api/v1/auth/users/', {
+          fetch(`${ serverUrl }/api/v1/auth/users/`, {
             method: 'POST',
             body: JSON.stringify(newUser),
             headers: {

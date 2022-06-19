@@ -86,11 +86,12 @@
 </template>
 
 <script>
+import { serverUrl } from '../../config.js';
 
 export default {
   created() {
     const id = this.$route.params.id;
-    const url = `http://127.0.0.1:8000/api/v1/contract/${ id }`;
+    const url = `${ serverUrl }/api/v1/contract/${ id }`;
 
     fetch(url, {
       method: 'GET',
